@@ -8,6 +8,24 @@ function TravelList() {
     setTravelPlans(travelPlansData);
   }, []);
 
+  const getLabel = (plan) => {
+    let labels = [];
+    if (plan.totalCost <= 350) {
+      labels.push("Great Deal");
+    }
+    if (plan.totalCost >= 1500) {
+      labels.push("Premium");
+    }
+    if (plan.allInclusive) {
+      labels.push("All Inclusive");
+    }
+    return labels.join(", ");
+  };
+
+  const handleDelete = (id) => {
+    setTravelPlans(travelPlans.filter(plan => plan.id !== id));
+  };
+
   return (
     <div>
       <h2>Travel Plans</h2>
@@ -20,6 +38,8 @@ function TravelList() {
             <p>Days: {plan.days}</p>
             <p>All-Inclusive: {plan.allInclusive ? "Yes" : "No"}</p>
             <p>Total Cost: ${plan.totalCost}</p>
+            <p>Labels: {getLabel(plan)}</p>
+            <button onClick={() => handleDelete(plan.id)}>Delete</button>
           </li>
         ))}
       </ul>
